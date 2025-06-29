@@ -1,8 +1,8 @@
-name: Auto Fetch Prices
+name: ⏱ Fetch Nifty Prices
 
 on:
   schedule:
-    - cron: '*/16 3-10 * * 1-5'
+    - cron: '*/30 * * * *'  # Every 30 mins, 24x7 (for testing)
   workflow_dispatch:
 
 jobs:
