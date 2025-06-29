@@ -1,0 +1,34 @@
+name: Auto Fetch Prices
+
+on:
+  schedule:
+    - cron: '*/16 3-10 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install axios
+        run: npm install axios
+
+      - name: Run price fetcher
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: node api/fetch-prices.js
+
+      - name: Commit updated prices
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add data/prices.json
+          git commit -m "🔄 Auto update prices"
+          git push
