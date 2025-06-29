@@ -2,7 +2,7 @@ name: 🔁 Fetch Nifty Prices
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Every 30 mins daily
+
   workflow_dispatch:
 
 jobs:
