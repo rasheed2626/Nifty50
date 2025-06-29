@@ -22,7 +22,7 @@ jobs:
 
       - name: Run price fetcher
         env:
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.a753d26658msh31c38cec72b22f1p1e8e3cjsn14772aad64ed }}
         run: node api/fetch-prices.js
 
       - name: Commit updated prices
