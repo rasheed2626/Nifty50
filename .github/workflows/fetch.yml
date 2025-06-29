@@ -1,34 +1,34 @@
-name: ⏱ Fetch Nifty Prices
+name: 🔁 Fetch Nifty Prices
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Every 30 mins, 24x7 (for testing)
+    - cron: '*/30 * * * *'  # Every 30 minutes, every day
   workflow_dispatch:
 
 jobs:
-  fetch:
+  update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 📦 Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: 🔧 Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install axios
+      - name: 🛠 Install deps
         run: npm install axios
 
-      - name: Run price fetcher
-        env:
-          RAPIDAPI_KEY: ${{ secrets.a753d26658msh31c38cec72b22f1p1e8e3cjsn14772aad64ed }}
+      - name: 📈 Fetch prices
         run: node api/fetch-prices.js
 
-      - name: Commit updated prices
+      - name: 🚀 Commit updated prices
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config --global user.name 'github-actions'
+          git config --global user.email 'actions@github.com'
           git add data/prices.json
-          git commit -m "🔄 Auto update prices"
+          git commit -m "Update prices" || echo "No changes"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
